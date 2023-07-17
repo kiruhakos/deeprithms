@@ -234,7 +234,7 @@ LOCALE_PATHS = (
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files
 
@@ -317,7 +317,7 @@ CKEDITOR_CONFIGS = {
 CSRF_USE_SESSIONS = True
 CSRF_COOKIE_HTTPONLY = False
 
-CSRF_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = True
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
