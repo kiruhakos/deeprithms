@@ -23,9 +23,7 @@ class UKTranslationMiddleware:
         ip, routable = get_client_ip(request)
         
         if ip and routable:
-            country_code = get_country_code_from_ip(client_ip)
-
-            if country_code == "UA":
+            if ip.startswith("UA"):
                 activate('uk')
             else:
                 activate('en')
