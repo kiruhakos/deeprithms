@@ -1,0 +1,150 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{{profile.user}}{% endblock %} 
+
+{% block content %}
+
+
+
+<div class="profile">
+    <div class="profile-navigation-bar" id="profile-navbar">
+      <button id="hideButton" onclick="hideNavbar()"><</button>
+        <div class="user-info">
+      {% if user.profile.photo %}
+        <img class="profile-user-photo" src="{{ user.profile.photo.url }}" height=120 width=100><br><br>
+      {% else %}
+        <img class="profile-user-photo" src="{% static 'main\img\user.png' %}" height=120 width=120><br><br>
+      {% endif %} 
+      <h1>{{profile.user}}</h1>
+    </div>
+    {% if profile.user == request.user %}
+      <ul class="navigation-profile">
+            <a href="{% url 'publications' %}"><button class="profile-nav-button"><i class="fa-solid fa-upload"></i> {% trans 'Publications' %}</button></a>
+            <a href="{% url 'saved-publications' %}"><button class="profile-nav-button"><i class="fa-solid fa-bookmark"></i> {% trans 'Saved publications' %}</button></a>
+            <a href="{% url 'meetings' %}"><button class="profile-nav-button"><i class="fa-solid fa-video"></i> {% trans 'MeetEngine meetings' %}</button></a>
+            <a href="{% url 'settings' user.id %}"><button class="profile-nav-button"><i class="fa-solid fa-gear"></i> {% trans 'Settings' %}</button></a>
+            <div class="profile-form-container">
+            <button class="profile-nav-button drop_right_btn"><i class="fa-solid fa-pen"></i> {% trans 'Customise profile' %}</button>
+            <form method="post" action="{% url 'profile' user.id %}" class="profile-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input type="text" id="name" name="name" value="{{ profile.name }}">
+              <input type="text" id="info" name="info" value="{{ profile.info }}">
+              {% load countries %}
+              {% get_countries as countries %}
+              <select id="country" name="country">
+              {% for country in countries %}
+              <option value="{{ country.code }}">{{ country.name }}</option>
+              {% endfor %}
+              </select> 
+              <input type="file" id="photo" name="photo" value="{{profile.photo}}"> 
+              <button type="submit" class="btn btn-success" >{% trans 'Update Profile' %}</button>
+          </form>
+          </div>
+            <a href="{% url 'api-logout' %}"><button class="profile-nav-button"><i class="fa-solid fa-right-from-bracket"></i> {% trans 'Log out' %}</button></a>
+      </ul>
+      {% endif %}
+    </div>
+    <button id="showButton" onclick="showNavbar()" style="display: none;">></button>
+    <script>
+    function hideNavbar() {
+      var profile_navbar = document.getElementById("profile-navbar");
+      var hideButton = document.getElementById("hideButton");
+      var showButton = document.getElementById("showButton");
+    
+      profile_navbar.style.display = "none";
+      hideButton.style.display = "none";
+      showButton.style.display = "block";
+    }
+    
+    function showNavbar() {
+      var profile_navbar = document.getElementById("profile-navbar");
+      var hideButton = document.getElementById("hideButton");
+      var showButton = document.getElementById("showButton");
+    
+      profile_navbar.style.display = "block";
+      hideButton.style.display = "block";
+      showButton.style.display = "none";
+    }</script>
+    <div class="column">
+      <h1>{% trans 'About' %}</h1>
+      <div class="user-info">
+        <div class="user-info-option">
+            <h3>{% trans 'Name' %}|</h3>
+             <p>{{profile.name}}</p>
+        </div>
+        <div class="user-info-option">
+            <h3>{% trans 'Info' %}|</h3>
+            <p>{{profile.info}}</p>
+        </div>
+        <div class="user-info-option">
+            <h3>{% trans 'Country' %}|</h3>
+            <link rel="stylesheet" href="{% static 'flags/sprite.css' %}">
+            <i class="{{ profile.country.flag_css }}"></i>
+
+            <p>{{profile.country.name}}</p>
+          </div>        
+      </div>
+    </div>
+    <div class="projects-profile">
+      <h1>{% trans 'Projects' %}</h1>
+        {% for project in projects %}
+        <div class="projects">
+          <div class="project">
+            <div class="project-photo">
+              {% if project.photos %}
+                <img class="img-left-project" src="{{ project.photos.url }}" height="400" width="500">
+              {% endif %}
+            </div>
+            <div class="project-info">
+              <h1>{{ project.title }}</h1>
+              <div class="user-info-row">
+              {% if project.user.photo %}
+                <img src="{{ project.user.photo.url }}" height=30 width=30><br><br>
+              {% else %}
+                <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+              {% endif %} 
+              <p><a href="">{{ project.user.user }}</a> {% trans 'posted on' %} {{ project.posted }}</p>
+            </div>
+              <div class="btn-row">
+              {% if project.colab %}
+              <a href="{{project.colab}}"><img src="{% static 'main\img\colab_logo.png' %}" alt=""></a>
+              {% endif %}
+              <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ project.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="project_id" value="{{ project.id }}">
+                <button type="submit" class="btn btn-light like">
+                  <i class="fa-solid fa-thumbs-up"></i>
+                </button>
+                <div class="likes">
+                  <div class="like-count">{{ project.project_liked.count }} {% trans 'likes' %}</div>
+                </div>
+              </form>
+              <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ project.id }}">
+                {% csrf_token %}
+                <input type="hidden" name="project_id" value="{{ project.id }}">
+                <button type="submit" class="btn btn-light save">
+                  <i class="fa-solid fa-bookmark"></i>
+                </button>
+              </form>
+              {% if profile.user == request.user %}
+              <button class="btn btn-danger delete" id="delete-project" onclick="window.location.href='{% url 'project-delete' project.id %}' ">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+              {% endif %}
+              </div>
+            </div>
+            <div class="project-details">
+              <p>{{ project.info|truncatewords:30 }}</p>
+              <a href="{% url 'project-detailed' project.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        {% if projects.has_next %}
+        <div id="load-more-section">
+          <a href="?page={{ projects.next_page_number }}"><button id="load-more-button" >{% trans 'Load More' %}</button></a> 
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

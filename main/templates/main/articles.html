@@ -1,0 +1,112 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{% trans 'Articles' %}{% endblock %}
+
+{% block content %}
+<div class="pre-header">
+  <h1 class="articles-description"><i class="fa-solid fa-newspaper"></i>{% trans 'Articles' %}</h1>
+  {% if user.is_authenticated %}
+  <a href="{% url 'new-article' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New article' %}</button></a>
+  {% endif %}
+  <form id="search" method="GET" action="" class="search-form">
+    <input type="text" name="q" value="" placeholder="{% trans 'Search' %}">
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+</div>
+
+<script>
+  function handleFormSubmission(event){
+   event.preventDefault()
+   var query = document.querySelector('input[name="q"]').value;
+   window.location.href = '/articles/?q=' + query;
+  }
+</script>
+
+{% if query %}
+  {% if articles %}
+    <div class="articles publications">
+      {% for article in articles %}
+        <div class="article publication">
+          <div class="article-info publication-info">
+            <h1>{{ article.title }} |</h1>
+            {% if article.user.photo %}
+              <img src="{{ article.user.photo.url }}" height=30 width=30><br><br>
+            {% else %}
+              <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+            {% endif %} 
+            <p><a href="">{{ article.user.user }}</a>{% trans 'posted on' %} {{ article.posted }}</p>
+            <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ article.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="article_id" value="{{ article.id }}">
+              <button type="submit" class="btn btn-light like">
+                <i class="fa-solid fa-thumbs-up"></i>
+              </button>
+              <div class="likes">
+                <div class="like-count">{{ article.article_liked.count }} {% trans 'likes' %}</div>
+              </div>
+            </form>
+            <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ article.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="article_id" value="{{ article.id }}">
+              <button type="submit" class="btn btn-light save">
+                <i class="fa-solid fa-bookmark"></i>
+              </button>
+            </form>
+          </div>
+          <div class="article-details publication-details">
+            {% if article.photos %}
+              <img class="img-left" src="{{ article.photos.url }}">
+            {% endif %}
+            <p>{{ article.content|truncatewords:100|safe }}</p>
+            <a href="{% url 'article-detailed' article.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching articles found.'%}</p></div>
+  {% endif %}
+{% else %}
+<div class="articles publications">
+    {% for article in articles %}
+      <div class="article publication">
+        <div class="article-info publication-info">
+          <h1>{{ article.title }} |</h1>
+          {% if article.user.photo %}
+            <img src="{{ article.user.photo.url }}" height=30 width=30><br><br>
+          {% else %}
+            <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+          {% endif %} 
+          <p><a href="">{{ article.user.user }}</a>{% trans 'posted on' %} {{ article.posted }}</p>
+          <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light like">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+            <div class="likes">
+              <div class="like-count">{{ article.article_liked.count }} {% trans 'likes' %}</div>
+            </div>
+          </form>
+          <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light save">
+              <i class="fa-solid fa-bookmark"></i>
+            </button>
+          </form>
+        </div>
+        <div class="article-details publication-details">
+          {% if article.photos %}
+            <img class="img-left" src="{{ article.photos.url }}">
+          {% endif %}
+          <p>{{ article.content|truncatewords:100|safe }}</p>
+          <a href="{% url 'article-detailed' article.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+        </div>
+      </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
+
+

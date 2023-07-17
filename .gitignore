@@ -1,0 +1,5 @@
+.env
+db.sqlite3
+sqldiff.exe
+sqlite3.exe
+sqlite3_analyzer.exe

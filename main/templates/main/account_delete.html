@@ -1,0 +1,19 @@
+{% load static i18n %}
+{% block title %}{% trans 'Delete Account' %}{% endblock %}
+
+{% block content %}
+{% for message in error_message %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+{% endfor %}
+
+<h1>{% trans 'Confirm Account Deletion' %}</h1>
+<form method="post" action="{% url 'account-delete' user.id %}">
+  {% csrf_token %}
+  <label for="password">{% trans 'Enter your password:' %}</label>
+  <input type="password" name="password">
+  <button type="submit">{% trans 'Delete Account' %}</button>
+</form>
+
+{% endblock content %}

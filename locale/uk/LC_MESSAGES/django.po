@@ -1,0 +1,516 @@
+# Deeprithms Translation Base.
+# Copyright (C) 2023 Deeprithms.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-16 21:44+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: .\aiplace\templates\flatpages\privacy.html:6
+#: .\aiplace\main\templates\main\main.html:163
+msgid "Privacy"
+msgstr "Політика конфіденційності"
+
+#: .\aiplace\templates\flatpages\terms.html:6
+#: .\aiplace\main\templates\main\main.html:162
+msgid "Terms"
+msgstr "Умови використання"
+
+#: .\aiplace\main\templates\main\account_delete.html:2
+#: .\aiplace\main\templates\main\account_delete.html:16
+#: .\aiplace\main\templates\main\settings.html:37
+msgid "Delete Account"
+msgstr "Видалити акаунт"
+
+#: .\aiplace\main\templates\main\account_delete.html:11
+msgid "Confirm Account Deletion"
+msgstr "Пітвердити видалення акаунту"
+
+#: .\aiplace\main\templates\main\account_delete.html:14
+msgid "Enter your password:"
+msgstr "Введіть ваш пароль:"
+
+#: .\aiplace\main\templates\main\article_detail.html:4
+msgid "Article № "
+msgstr "Стаття №"
+
+#: .\aiplace\main\templates\main\article_detail.html:23
+#: .\aiplace\main\templates\main\discussion_detail.html:22
+#: .\aiplace\main\templates\main\project_detail.html:24
+#: .\aiplace\main\templates\main\question_detail.html:57
+msgid "Discussion"
+msgstr "Обговорення"
+
+#: .\aiplace\main\templates\main\article_detail.html:47
+#: .\aiplace\main\templates\main\discussion_detail.html:46
+#: .\aiplace\main\templates\main\project_detail.html:49
+#: .\aiplace\main\templates\main\question_detail.html:82
+msgid "Commented"
+msgstr "Прокоментовано"
+
+#: .\aiplace\main\templates\main\article_detail.html:47
+#: .\aiplace\main\templates\main\discussion_detail.html:46
+#: .\aiplace\main\templates\main\project_detail.html:49
+#: .\aiplace\main\templates\main\question_detail.html:52
+#: .\aiplace\main\templates\main\question_detail.html:82
+msgid "ago"
+msgstr "тому"
+
+#: .\aiplace\main\templates\main\article_edit.html:3
+#: .\aiplace\main\templates\main\article_edit.html:9
+msgid "Edit article"
+msgstr "Редагувати статтю"
+
+#: .\aiplace\main\templates\main\articles.html:3
+#: .\aiplace\main\templates\main\articles.html:7
+#: .\aiplace\main\templates\main\main.html:27
+#: .\aiplace\main\templates\main\main.html:80
+#: .\aiplace\main\templates\main\main.html:154
+msgid "Articles"
+msgstr "Статті"
+
+#: .\aiplace\main\templates\main\articles.html:9
+#: .\aiplace\main\templates\main\new-article.html:3
+#: .\aiplace\main\templates\main\new-article.html:9
+#: .\aiplace\main\templates\main\publications.html:10
+msgid "New article"
+msgstr "Нова стаття"
+
+#: .\aiplace\main\templates\main\articles.html:12
+#: .\aiplace\main\templates\main\discussions.html:12
+#: .\aiplace\main\templates\main\projects.html:12
+#: .\aiplace\main\templates\main\publications.html:15
+#: .\aiplace\main\templates\main\questions.html:12
+#: .\aiplace\main\templates\main\saved_publications.html:9
+msgid "Search"
+msgstr "Пошук"
+
+#: .\aiplace\main\templates\main\articles.html:37
+#: .\aiplace\main\templates\main\articles.html:80
+#: .\aiplace\main\templates\main\discussions.html:37
+#: .\aiplace\main\templates\main\discussions.html:69
+#: .\aiplace\main\templates\main\profile.html:106
+#: .\aiplace\main\templates\main\projects.html:43
+#: .\aiplace\main\templates\main\projects.html:100
+#: .\aiplace\main\templates\main\publications.html:51
+#: .\aiplace\main\templates\main\publications.html:105
+#: .\aiplace\main\templates\main\publications.html:147
+#: .\aiplace\main\templates\main\publications.html:198
+#: .\aiplace\main\templates\main\publications.html:240
+#: .\aiplace\main\templates\main\publications.html:291
+#: .\aiplace\main\templates\main\publications.html:328
+#: .\aiplace\main\templates\main\publications.html:376
+#: .\aiplace\main\templates\main\questions.html:37
+#: .\aiplace\main\templates\main\questions.html:70
+#: .\aiplace\main\templates\main\saved_publications.html:39
+#: .\aiplace\main\templates\main\saved_publications.html:84
+#: .\aiplace\main\templates\main\saved_publications.html:117
+#: .\aiplace\main\templates\main\saved_publications.html:165
+#: .\aiplace\main\templates\main\saved_publications.html:207
+#: .\aiplace\main\templates\main\saved_publications.html:236
+msgid "posted on"
+msgstr "опубліковано в"
+
+#: .\aiplace\main\templates\main\articles.html:45
+#: .\aiplace\main\templates\main\articles.html:88
+#: .\aiplace\main\templates\main\profile.html:119
+#: .\aiplace\main\templates\main\projects.html:55
+#: .\aiplace\main\templates\main\projects.html:114
+#: .\aiplace\main\templates\main\publications.html:64
+#: .\aiplace\main\templates\main\publications.html:155
+#: .\aiplace\main\templates\main\publications.html:254
+#: .\aiplace\main\templates\main\publications.html:336
+#: .\aiplace\main\templates\main\saved_publications.html:51
+#: .\aiplace\main\templates\main\saved_publications.html:125
+#: .\aiplace\main\templates\main\saved_publications.html:178
+#: .\aiplace\main\templates\main\saved_publications.html:244
+msgid "likes"
+msgstr "вподобайок"
+
+#: .\aiplace\main\templates\main\articles.html:61
+#: .\aiplace\main\templates\main\articles.html:104
+#: .\aiplace\main\templates\main\profile.html:138
+#: .\aiplace\main\templates\main\projects.html:69
+#: .\aiplace\main\templates\main\projects.html:128
+#: .\aiplace\main\templates\main\publications.html:86
+#: .\aiplace\main\templates\main\publications.html:128
+#: .\aiplace\main\templates\main\publications.html:179
+#: .\aiplace\main\templates\main\publications.html:276
+#: .\aiplace\main\templates\main\publications.html:313
+#: .\aiplace\main\templates\main\publications.html:360
+#: .\aiplace\main\templates\main\questions.html:51
+#: .\aiplace\main\templates\main\questions.html:84
+#: .\aiplace\main\templates\main\saved_publications.html:65
+#: .\aiplace\main\templates\main\saved_publications.html:98
+#: .\aiplace\main\templates\main\saved_publications.html:141
+#: .\aiplace\main\templates\main\saved_publications.html:192
+#: .\aiplace\main\templates\main\saved_publications.html:221
+#: .\aiplace\main\templates\main\saved_publications.html:260
+msgid "Learn more"
+msgstr "Дізнатися більше"
+
+#: .\aiplace\main\templates\main\articles.html:67
+#: .\aiplace\main\templates\main\publications.html:185
+#: .\aiplace\main\templates\main\saved_publications.html:147
+msgid "No matching articles found."
+msgstr "Відповідних статей не знайдено."
+
+#: .\aiplace\main\templates\main\discussion_detail.html:4
+msgid "Discussion №"
+msgstr "Обговорення №"
+
+#: .\aiplace\main\templates\main\discussion_edit.html:3
+#: .\aiplace\main\templates\main\discussion_edit.html:9
+msgid "Edit discussion"
+msgstr "Редагувати обговорення"
+
+#: .\aiplace\main\templates\main\discussions.html:3
+#: .\aiplace\main\templates\main\discussions.html:7
+#: .\aiplace\main\templates\main\main.html:28
+#: .\aiplace\main\templates\main\main.html:81
+#: .\aiplace\main\templates\main\main.html:155
+msgid "Discussions"
+msgstr "Обговорення"
+
+#: .\aiplace\main\templates\main\discussions.html:9
+#: .\aiplace\main\templates\main\new-discussion.html:3
+#: .\aiplace\main\templates\main\new-discussion.html:9
+#: .\aiplace\main\templates\main\publications.html:11
+msgid "New discussion"
+msgstr "Нове обговорення"
+
+#: .\aiplace\main\templates\main\discussions.html:50
+#: .\aiplace\main\templates\main\discussions.html:82
+#: .\aiplace\main\templates\main\publications.html:216
+#: .\aiplace\main\templates\main\publications.html:394
+msgid "Let's talk"
+msgstr "Розмовляти"
+
+#: .\aiplace\main\templates\main\discussions.html:56
+#: .\aiplace\main\templates\main\publications.html:222
+msgid "No matching discussions found."
+msgstr "Відповідних обговорень не знайдено."
+
+#: .\aiplace\main\templates\main\index.html:3
+#: .\aiplace\main\templates\main\index.html:10
+msgid "Deeprithms - place of AI developers and experts."
+msgstr "Deeprithms - місце розробників ШІ та експертів."
+
+#: .\aiplace\main\templates\main\index.html:12
+#: .\aiplace\main\templates\main\login.html:12
+#: .\aiplace\main\templates\main\login.html:20
+#: .\aiplace\main\templates\main\login.html:33
+#: .\aiplace\main\templates\main\main.html:55
+#: .\aiplace\main\templates\main\main.html:67
+#: .\aiplace\main\templates\main\main.html:86
+#: .\aiplace\main\templates\main\register.html:35
+msgid "Sign in"
+msgstr "Увійти"
+
+#: .\aiplace\main\templates\main\index.html:14
+#: .\aiplace\main\templates\main\login.html:32
+#: .\aiplace\main\templates\main\main.html:57
+#: .\aiplace\main\templates\main\main.html:88
+#: .\aiplace\main\templates\main\register.html:10
+#: .\aiplace\main\templates\main\register.html:18
+#: .\aiplace\main\templates\main\register.html:36
+msgid "Sign up"
+msgstr "Зареєструватися"
+
+#: .\aiplace\main\templates\main\index.html:22
+msgid "Add and create projects"
+msgstr "Додавайте та створюйте проекти"
+
+#: .\aiplace\main\templates\main\index.html:23
+msgid ""
+"Add projects you have done or collaborate with others to create new ones."
+msgstr "Додавайте проекти, які ви створили, або співпрацюйте з іншими користувачами, щоб створити нові."
+
+#: .\aiplace\main\templates\main\index.html:27
+msgid "Create articles"
+msgstr "Створюйте статті"
+
+#: .\aiplace\main\templates\main\index.html:28
+msgid "Create articles about latest AI news."
+msgstr "Створюйте статті про найостанніші новини ШІ."
+
+#: .\aiplace\main\templates\main\index.html:32
+msgid "Start discussions"
+msgstr "Починайте обговорення"
+
+#: .\aiplace\main\templates\main\index.html:33
+msgid "Start discussions about AI innovative topics."
+msgstr "Починайте обговорення революційних тем ШІ."
+
+#: .\aiplace\main\templates\main\index.html:37
+msgid "Ask questions"
+msgstr "Задавайте питання"
+
+#: .\aiplace\main\templates\main\index.html:38
+msgid ""
+"Ask questions and explore solutions to solve your AI application code "
+"problems. "
+msgstr "Задавайте питання та шукайте рішення для вирішення проблем програми ШІ."
+
+#: .\aiplace\main\templates\main\login.html:25
+#: .\aiplace\main\templates\main\register.html:23
+msgid "Username"
+msgstr "Ім'я користувача"
+
+#: .\aiplace\main\templates\main\login.html:29
+#: .\aiplace\main\templates\main\register.html:27
+msgid "Password"
+msgstr "Пароль"
+
+#: .\aiplace\main\templates\main\login.html:35
+msgid "Sign in via Github"
+msgstr "Увійти через Github"
+
+#: .\aiplace\main\templates\main\login.html:36
+msgid "Sign in via Google"
+msgstr "Увійти через Google"
+
+#: .\aiplace\main\templates\main\main.html:26
+#: .\aiplace\main\templates\main\main.html:79
+#: .\aiplace\main\templates\main\main.html:153
+#: .\aiplace\main\templates\main\profile.html:89
+#: .\aiplace\main\templates\main\projects.html:3
+#: .\aiplace\main\templates\main\projects.html:7
+msgid "Projects"
+msgstr "Проекти"
+
+#: .\aiplace\main\templates\main\main.html:29
+#: .\aiplace\main\templates\main\main.html:82
+#: .\aiplace\main\templates\main\main.html:156
+#: .\aiplace\main\templates\main\questions.html:3
+#: .\aiplace\main\templates\main\questions.html:7
+msgid "Questions"
+msgstr "Запитання"
+
+#: .\aiplace\main\templates\main\main.html:30
+msgid "Change theme"
+msgstr "Змінити тему сайту"
+
+#: .\aiplace\main\templates\main\main.html:32
+msgid "Select language"
+msgstr "Обрати мову"
+
+#: .\aiplace\main\templates\main\main.html:46
+msgid "Submit"
+msgstr "Надіслати"
+
+#: .\aiplace\main\templates\main\main.html:50
+#: .\aiplace\main\templates\main\main.html:84
+msgid "Profile"
+msgstr "Профіль"
+
+#: .\aiplace\main\templates\main\main.html:53
+msgid "Account"
+msgstr "Акаунт"
+
+#: .\aiplace\main\templates\main\index.html:13
+#: .\aiplace\main\templates\main\main.html:56
+#: .\aiplace\main\templates\main\main.html:87
+msgid "or"
+msgstr "або"
+
+#: .\aiplace\main\templates\main\main.html:146
+msgid "Deeprithms. All rights reserved."
+msgstr "Deeprithms. Всі права захищені."
+
+#: .\aiplace\main\templates\main\main.html:151
+msgid "Navigation"
+msgstr "Навігація"
+
+#: .\aiplace\main\templates\main\main.html:160
+msgid "Usage"
+msgstr "Використання"
+
+#: .\aiplace\main\templates\main\meetings.html:3
+msgid "meetings"
+msgstr "Відеозустрічі"
+
+#: .\aiplace\main\templates\main\meetings.html:7
+msgid "Meetings"
+msgstr "Відеозустрічі"
+
+#: .\aiplace\main\templates\main\meetings.html:8
+#: .\aiplace\main\templates\main\new-meeting.html:3
+#: .\aiplace\main\templates\main\new-meeting.html:9
+msgid "New meeting"
+msgstr "Нова відеозустріч"
+
+#: .\aiplace\main\templates\main\meetings.html:21
+msgid "Organised by"
+msgstr "Організована"
+
+#: .\aiplace\main\templates\main\new-password.html:2
+msgid "New password"
+msgstr "Новий пароль"
+
+#: .\aiplace\main\templates\main\new-password.html:11
+#: .\aiplace\main\templates\main\new-password.html:18
+#: .\aiplace\main\templates\main\settings.html:36
+msgid "Update Password"
+msgstr "Оновити пароль"
+
+#: .\aiplace\main\templates\main\new-password.html:14
+msgid "Enter your old password:"
+msgstr "Введіть ваш старий пароль:"
+
+#: .\aiplace\main\templates\main\new-password.html:16
+msgid "Enter a new one:"
+msgstr "Введіть новий:"
+
+#: .\aiplace\main\templates\main\new-project.html:3
+#: .\aiplace\main\templates\main\new-project.html:9
+#: .\aiplace\main\templates\main\projects.html:9
+#: .\aiplace\main\templates\main\publications.html:9
+msgid "New project"
+msgstr "Новий проект"
+
+#: .\aiplace\main\templates\main\new-question.html:3
+#: .\aiplace\main\templates\main\new-question.html:9
+#: .\aiplace\main\templates\main\publications.html:12
+#: .\aiplace\main\templates\main\questions.html:9
+msgid "New question"
+msgstr "Нове запитання"
+
+#: .\aiplace\main\templates\main\profile.html:22
+#: .\aiplace\main\templates\main\publications.html:7
+msgid "Publications"
+msgstr "Публікації"
+
+#: .\aiplace\main\templates\main\profile.html:23
+#: .\aiplace\main\templates\main\saved_publications.html:7
+msgid "Saved publications"
+msgstr "Збереженні публікації"
+
+#: .\aiplace\main\templates\main\profile.html:24
+msgid "MeetEngine meetings"
+msgstr "Відеозустрічі MeetEngine"
+
+#: .\aiplace\main\templates\main\profile.html:25
+#: .\aiplace\main\templates\main\settings.html:7
+msgid "Settings"
+msgstr "Налаштування"
+
+#: .\aiplace\main\templates\main\profile.html:27
+msgid "Customise profile"
+msgstr "Редагувати профіль"
+
+#: .\aiplace\main\templates\main\profile.html:40
+#: .\aiplace\main\templates\main\settings.html:27
+msgid "Update Profile"
+msgstr "Оновити профіль"
+
+#: .\aiplace\main\templates\main\profile.html:43
+msgid "Log out"
+msgstr "Вийти"
+
+#: .\aiplace\main\templates\main\profile.html:69
+msgid "About"
+msgstr "Про користувача"
+
+#: .\aiplace\main\templates\main\profile.html:72
+msgid "Name"
+msgstr "Ім'я"
+
+#: .\aiplace\main\templates\main\profile.html:76
+msgid "Info"
+msgstr "Інформація"
+
+#: .\aiplace\main\templates\main\profile.html:80
+msgid "Country"
+msgstr "Країна"
+
+#: .\aiplace\main\templates\main\profile.html:145
+#: .\aiplace\main\templates\main\projects.html:76
+#: .\aiplace\main\templates\main\projects.html:135
+msgid "Load More"
+msgstr "Завантажити більше"
+
+#: .\aiplace\main\templates\main\project_detail.html:4
+msgid "Project №"
+msgstr "Проект №"
+
+#: .\aiplace\main\templates\main\project_edit.html:3
+#: .\aiplace\main\templates\main\project_edit.html:9
+msgid "Edit project"
+msgstr "Редагувати проект"
+
+#: .\aiplace\main\templates\main\projects.html:80
+#: .\aiplace\main\templates\main\publications.html:92
+#: .\aiplace\main\templates\main\saved_publications.html:71
+msgid "No matching projects found."
+msgstr "Відповідних проектів не знайдено."
+
+#: .\aiplace\main\templates\main\publications.html:3
+msgid "'s publications"
+msgstr "публікації"
+
+#: .\aiplace\main\templates\main\publications.html:134
+#: .\aiplace\main\templates\main\questions.html:57
+#: .\aiplace\main\templates\main\saved_publications.html:104
+msgid "No matching questions found."
+msgstr "Відповідних запитань не знайдено."
+
+#: .\aiplace\main\templates\main\question_detail.html:4
+msgid "Question №"
+msgstr "Запитання №"
+
+#: .\aiplace\main\templates\main\question_detail.html:26
+msgid "Answers"
+msgstr "Відповіді"
+
+#: .\aiplace\main\templates\main\question_detail.html:52
+msgid "Answered"
+msgstr "Відповідь дано"
+
+#: .\aiplace\main\templates\main\question_edit.html:3
+#: .\aiplace\main\templates\main\question_edit.html:9
+msgid "Edit question"
+msgstr "Редагувати запитання"
+
+#: .\aiplace\main\templates\main\register.html:31
+msgid "Email"
+msgstr "Електронна пошта"
+
+#: .\aiplace\main\templates\main\saved_publications.html:3
+msgid "'saved publications"
+msgstr "збереженні публікації"
+
+#: .\aiplace\main\templates\main\settings.html:3
+msgid "'s settings"
+msgstr "налаштування"
+
+#: .\aiplace\main\templates\main\settings.html:12
+msgid "Profile data"
+msgstr "Інформація профілю"
+
+#: .\aiplace\main\templates\main\settings.html:14
+msgid "Profile form"
+msgstr "Форма профілю"
+
+#: .\aiplace\main\templates\main\settings.html:33
+msgid "Account data"
+msgstr "Інформація акаунту"
+
+#: .\aiplace\main\templates\main\settings.html:35
+msgid "Account actions"
+msgstr "Дії з акаунтом"

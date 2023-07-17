@@ -1,0 +1,54 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+
+{% block title %} {% trans 'Article № ' %} {{ article.id }} {% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<body>
+<div class="detailed-article detailed-publication">
+<h1 class="detailed-article-title">{{ article.title }}</h1>
+{% if article.photos %}
+    <p><img class="img-center" src="{{article.photos.url}}"></p>
+{% endif %}
+{% if article.user.photo %}
+  <img src="{{ article.user.photo.url }}" height=30 width=30><br><br>
+   {% else %}
+  <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+   {% endif %} 
+<p class="detailed-article-user"><a href="">{{ article.user.user }}</a></p>
+<p class="detailed-article-content">{{ article.content|safe }}</p>
+
+
+<div class="comments">
+  <h1>{% trans 'Discussion' %}</h1>
+  {% if user.is_active %}
+  <div class="commentform">
+  <form action="{% url 'article-detailed' article.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+</form>
+</div>
+
+
+{% endif %}
+  {% for comment in article.comments.all %}
+  <div class="comment">
+       {% if comment.user.avatar %}
+       <img src="{{ comment.user.avatar.url }}" height=50 width=50><br><br>
+       {% else %}
+       <img src="{% static 'main\img\user.png' %}" height=50 width=50><br><br>
+       {% endif %} 
+       <p>{{ comment.user.user }}</p>
+       <p>{{ comment.content|safe }}</p>
+       {% if comment.photos %}
+      <p><img class="img-center" src="{{comment.photos.url}}"></p>
+    {% endif %}
+       <p>{% trans 'Commented' %} {{ comment.posted|timesince }}  {% trans 'ago' %} </p></div>
+  {% endfor %}
+</div>
+
+</div>
+</body>
+{% endif %}
+{% endblock content %}

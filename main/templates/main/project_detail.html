@@ -1,0 +1,56 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+
+{% block title %} {% trans 'Project №' %}{{ project.id }}{% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<body>
+<div class="detailed-project detailed-publication">
+<h1 class="detailed-project-title">{{ project.title }}</h1>
+{% if project.photos %}
+    <p><img class="img-center" src="{{project.photos.url}}"></p>
+{% endif %}
+<a href="{% url 'profile' user.id%}">
+{% if project.user.photo %}
+  <img src="{{ project.user.photo.url }}" height=30 width=30><br><br>
+   {% else %}
+  <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+   {% endif %} 
+<p class="detailed-project-user">{{ project.user.user }}</a></p>
+<p class="detailed-project-content">{{ project.info|safe }}</p>
+<pre class="code"><code>{{ project.get_highlighted_code_project|safe }}</code></pre>
+
+<div class="comments">
+  <h1>{% trans 'Discussion' %}</h1>
+  {% if user.is_active %}
+  <div class="commentform">
+  <form action="{% url 'project-detailed' project.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+</form>
+</div>
+
+
+{% endif %}
+  {% for comment in project.comments.all %}
+  <div class="comment">
+    <a href="{% url 'profile' comment.user.id%}">
+       {% if comment.user.avatar %}
+       <img src="{{ comment.user.photo.url }}" height=50 width=50><br><br>
+       {% else %}
+       <img src="{% static 'main\img\user.png' %}" height=50 width=50><br><br>
+       {% endif %} 
+       <p>{{ comment.user.user }}</p></a>
+       <p>{{ comment.content|safe }}</p>
+       {% if comment.photos %}
+      <p><img class="img-center" src="{{comment.photos.url}}"></p>
+    {% endif %}
+       <p>{% trans 'Commented' %} {{ comment.posted|timesince }}  {% trans 'ago' %} </p></div>
+  {% endfor %}
+</div>
+</div>
+</div>
+</body>
+{% endif %}
+{% endblock content %}

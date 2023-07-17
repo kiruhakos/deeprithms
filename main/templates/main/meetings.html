@@ -1,0 +1,35 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %} {{request.user}}{% trans 'meetings' %}{% endblock %} 
+
+{% block content %}
+<div class="pre-header">
+  <h1 class="meeting-description"><i class="fa-solid fa-video"></i> {% trans 'Meetings' %}</h1>
+  <a href="{% url 'new-meeting' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New meeting' %}</button></a>
+</div>
+{% if meetings %}
+{% for meeting in meetings %}
+{% if meeting.organiser.user == request.user or meeting.participant.user == request.user %}
+<div class="meetings">
+  <a href="https://meetengine.onrender.com/new-room/{{meeting.uuid}}" >
+    <div class="meeting">
+        <img src="{% static 'main/img/meet_engine_logo.png' %}" alt="" class="img-center">
+        <h1>{{meeting.title}}</h1></a>
+        <button class="btn btn-danger delete" id="delete-meeting" onclick="window.location.href='{% url 'meeting-delete' meeting.id %}' ">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+        <p>{% trans 'Organised by' %}<a href="{% url 'profile' meeting.organiser.id %}">
+        {% if meeting.user.photo %}
+          <img src="{{ meeting.organiser.photo.url }}" height=30 width=30><br><br>
+        {% else %}
+          <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+        {% endif %} 
+        {{ meeting.organiser.user }}</a></p>
+        
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% endblock content %}

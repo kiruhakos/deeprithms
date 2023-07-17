@@ -1,0 +1,89 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{% trans 'Discussions' %}{% endblock %}
+
+{% block content %}
+<div class="pre-header">
+  <h1 class="discussions-description"><i class="fa-solid fa-comment"></i> {% trans 'Discussions' %}</h1>
+  {% if user.is_authenticated %}
+  <a href="{% url 'new-discussion' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New discussion' %}</button></a>
+  {% endif %}
+  <form id="search" method="GET" action="" class="search-form">
+    <input type="text" name="q" value="" placeholder="{% trans 'Search' %}">
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+</div>
+
+<script>
+  function handleFormSubmission(event){
+   event.preventDefault()
+   var query = document.querySelector('input[name="q"]').value;
+   window.location.href = '/discussions/?q=' + query;
+  }
+</script>
+
+{% if query %}
+  {% if discussions %}
+    <div class="discussions publications">
+      {% for discussion in discussions %}
+        <div class="discussion publication">
+          <div class="discussion-info publication-info">
+            <h1>{{ discussion.title }} |</h1>
+            {% if discussion.user.photo %}
+              <img src="{{ discussion.user.photo.url }}" height=30 width=30><br><br>
+            {% else %}
+              <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+            {% endif %} 
+            <p><a href="">{{ discussion.user.user }}</a> {% trans 'posted on' %} {{ discussion.launched }}</p>
+            <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ discussion.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+              <button type="submit" class="btn btn-light save">
+                <i class="fa-solid fa-bookmark"></i>
+              </button>
+            </form>
+          </div>
+          <div class="discussion-details publication-details">
+            {% if discussion.photos %}
+              <img class="img-left" src="{{ discussion.photos.url }}">
+            {% endif %}
+            <a href="{% url 'discussion-detailed' discussion.id %}"><button class="btn btn-info">{% trans "Let's talk" %}</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching discussions found.' %}</p></div>
+  {% endif %}
+{% else %}
+<div class="discussions publications">
+    {% for discussion in discussions %}
+      <div class="discussion publication">
+        <div class="discussion-info publication-info">
+          <h1>{{ discussion.title }} |</h1>
+          {% if discussion.user.photo %}
+            <img src="{{ discussion.user.photo.url }}" height=30 width=30><br><br>
+          {% else %}
+            <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+          {% endif %} 
+          <p><a href="">{{ discussion.user.user }}</a>{% trans 'posted on' %} {{ discussion.launched }}</p>
+        </div>
+        <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ discussion.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+          <button type="submit" class="btn btn-light save">
+            <i class="fa-solid fa-bookmark"></i>
+          </button>
+        </form>
+        <div class="discussion-details publication-details">
+          {% if discussion.photos %}
+            <img class="img-left" src="{{ discussion.photos.url }}">
+          {% endif %}
+          <a href="{% url 'discussion-detailed' discussion.id %}"><button class="btn btn-info">{% trans "Let's talk" %}</button></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+{% endblock %}
+

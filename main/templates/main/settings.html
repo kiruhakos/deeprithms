@@ -1,0 +1,43 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{{profile.user}}{% trans "'s settings" %} {% endblock %} 
+
+{% block content %}
+<div class="pre-header">
+    <h1 class="projects-description"><i class="fa-solid fa-gear"></i> {% trans 'Settings' %}</h1>
+</div>
+
+<div class="settings">
+    <div class="profile-data-settings">
+        <h1>{% trans 'Profile data' %}</h1>
+       <div class="settings-profile-form">
+        <h2>{% trans 'Profile form' %}</h2>
+    <form method="post" action="{% url 'settings' user.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" id="name" name="name" value="{{ profile.name }}">
+        <input type="text" id="info" name="info" value="{{ profile.info }}">
+        {% load countries %}
+        {% get_countries as countries %}
+        <select id="country" name="country">
+        {% for country in countries %}
+        <option value="{{ country.code }}">{{ country.name }}</option>
+        {% endfor %}
+        </select> 
+        <input type="file" id="photo" name="photo" value="{{profile.photo}}"> 
+        <button type="submit" class="btn btn-success" >{% trans 'Update Profile' %}</button>
+    </form> 
+    </div>
+    </div>
+
+    <div class="account-data-settings">
+    <h1>{% trans 'Account data' %}</h1>
+    <div class="account-actions">
+        <h2>{% trans 'Account actions' %}</h2>
+    <a href="{% url 'new-password' %}"><button class="btn btn-info">{% trans 'Update Password' %}</button></a>
+    <a href="{% url 'account-delete' user.id %}"><button class="btn btn-danger"><i class="fa-solid fa-trash"></i> {% trans 'Delete Account' %}</button></a>
+</div>    
+</div>
+</div>
+
+
+{% endblock content %}

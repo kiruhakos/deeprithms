@@ -1,0 +1,402 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{{request.user.username}}{% trans "'s publications" %}{% endblock %} 
+
+{% block content %}
+<div class="pre-header">
+  <h1 class="projects-description"><i class="fa-solid fa-upload"></i> {% trans 'Publications' %}</h1>
+  {% if user.is_authenticated %}
+  <a href="{% url 'new-project' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New project' %}</button></a>
+  <a href="{% url 'new-article' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New article' %}</button></a>
+  <a href="{% url 'new-discussion' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New discussion' %}</button></a>
+  <a href="{% url 'new-question' %}"><button class="btn btn-success"><i class="fa-solid fa-pen"></i> {% trans 'New question' %}</button></a>
+  {% endif %}
+  <form id="search" method="GET" action="" class="search-form">
+    <input type="text" name="q" value="" placeholder="{% trans 'Search' %}">
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+</div>
+{% for message in message_tags %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+{% endfor %}
+
+<script>
+   function handleFormSubmission(event){
+    event.preventDefault()
+    var query = document.querySelector('input[name="q"]').value;
+    window.location.href = '/publications/?q=' + query;
+   }
+</script>
+
+{% if query %}
+  {% if projects %}
+    <div class="projects">
+      {% for project in projects %}
+        <div class="project">
+          <div class="project-photo">
+            {% if project.photos %}
+              <img class="img-left-project" src="{{ project.photos.url }}" height="400" width="500">
+            {% endif %}
+          </div>
+          <div class="project-info">
+            <h1>{{ project.title }}</h1>
+            <div class="user-info-row">
+            {% if project.user.photo %}
+              <img src="{{ project.user.photo.url }}" height=30 width=30><br><br>
+            {% else %}
+              <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+            {% endif %} 
+            <p><a href="">{{ project.user.user }}</a> {% trans 'posted on' %} {{ project.posted }}</p>
+            </div>
+            <div class="btn-row">
+            {% if project.colab %}
+            <a href="{{project.colab}}"><img src="{% static 'main\img\colab_logo.png' %}" alt=""></a>
+            {% endif %}
+            <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ project.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="project_id" value="{{ project.id }}">
+              <button type="submit" class="btn btn-light like">
+                <i class="fa-solid fa-thumbs-up"></i>
+              </button>
+              <div class="likes">
+                <div class="like-count">{{ project.project_liked.count }} {% trans 'likes' %}</div>
+              </div>
+            </form>
+            <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ project.id }}">
+              {% csrf_token %}
+              <input type="hidden" name="project_id" value="{{ project.id }}">
+              <button type="submit" class="btn btn-light save">
+                <i class="fa-solid fa-bookmark"></i>
+              </button>
+            </form>
+            <button class="btn btn-danger delete" id="delete-project" onclick="window.location.href='{% url 'project-delete' project.id %}' ">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+            <a href="{% url 'project-edit' project.id%}">
+              <button class="btn btn-light edit" id="edit-project">
+                  <i class="fa-solid fa-pen"></i>
+              </button>
+              </a>
+            </div>
+          </div>
+          <div class="project-details">
+            <p>{{ project.info|truncatewords:30|safe }}</p>
+            <a href="{% url 'project-detailed' project.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching projects found.' %}</p></div>
+  {% endif %}
+  {% if questions %}
+    <div class="questions publications">
+      {% for question in questions %}
+        <div class="question publication">
+          <div class="question-info publication-info">
+            <h1>{{ question.title }} |</h1>
+            {% if question.user.photo %}
+              <img src="{{ question.user.photo.url }}" height=30 width=30><br><br>
+            {% else %}
+              <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+            {% endif %} 
+            <p><a href="">{{ question.user.user }}</a> {% trans 'posted on' %} {{ question.posted }}</p>
+          </div>
+          
+          <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ question.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <button type="submit" class="btn btn-light save">
+              <i class="fa-solid fa-bookmark"></i>
+            </button>
+          </form>
+          <button class="btn btn-danger delete" id="delete-question" onclick="window.location.href='{% url 'question-delete' question.id %}' ">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <a href="{% url 'question-edit' question.id%}">
+            <button class="btn btn-light edit" id="edit-question">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+            </a>
+          <div class="question-details publication-details">
+            {% if question.photos %}
+              <img class="img-left" src="{{ question.photos.url }}">
+            {% endif %}
+            <p>{{ question.info|safe }}</p>
+            <a href="{% url 'question-detailed' question.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching questions found.' %}</p></div>
+  {% endif %}
+  {% if articles %}
+  <div class="articles publications">
+    {% for article in articles %}
+      <div class="article publication">
+        <div class="article-info publication-info">
+          <h1>{{ article.title }} |</h1>
+          {% if article.user.photo %}
+            <img src="{{ article.user.photo.url }}" height=30 width=30><br><br>
+          {% else %}
+            <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+          {% endif %} 
+          <p><a href="">{{ article.user.user }}</a> {% trans 'posted on' %} {{ article.posted }}</p>
+          <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light like">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+            <div class="likes">
+              <div class="like-count">{{ article.article_liked.count }} {% trans 'likes' %}</div>
+            </div>
+          </form>
+          <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light save">
+              <i class="fa-solid fa-bookmark"></i>
+            </button>
+          </form>
+          <button class="btn btn-danger delete" id="delete-article" onclick="window.location.href='{% url 'article-delete' article.id %}' ">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <a href="{% url 'article-edit' article.id%}">
+            <button class="btn btn-light edit" id="edit-article">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+            </a>
+        </div>
+        <div class="article-details publication-details">
+          {% if article.photos %}
+            <img class="img-left" src="{{ article.photos.url }}">
+          {% endif %}
+          <p>{{ article.content|truncatewords:100|safe }}</p>
+          <a href="{% url 'article-detailed' article.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% else %}
+<div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching articles found.' %}</p></div>
+{% endif %}
+{% if discussions %}
+<div class="discussions publications">
+  {% for discussion in discussions %}
+    <div class="discussion publication">
+      <div class="discussion-info publication-info">
+        <h1>{{ discussion.title }} |</h1>
+        {% if discussion.user.photo %}
+          <img src="{{ discussion.user.photo.url }}" height=30 width=30><br><br>
+        {% else %}
+          <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+        {% endif %} 
+        <p><a href="">{{ discussion.user.user }}</a> {% trans 'posted on' %} {{ discussion.launched }}</p>
+        <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ discussion.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+          <button type="submit" class="btn btn-light save">
+            <i class="fa-solid fa-bookmark"></i>
+          </button>
+        </form>
+        <a href="{% url 'discussion-edit' discussion.id%}">
+          <button class="btn btn-light edit" id="edit-discussion">
+              <i class="fa-solid fa-pen"></i>
+          </button>
+          </a>
+      </div>
+      <div class="discussion-details publication-details">
+        {% if discussion.photos %}
+          <img class="img-left" src="{{ discussion.photos.url }}">
+        {% endif %}
+        <a href="{% url 'discussion-detailed' discussion.id %}"><button class="btn btn-info">{% trans "Let's talk" %}</button></a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="no_objects_found"><img src="{% static 'main\img\no_objects_found.png' %}" alt="" height="150" width="150"><p class="no_objects_found_p">{% trans 'No matching discussions found.' %}</p></div>
+{% endif %}
+{% else %}
+  {% for project in projects %}
+    <div class="project">
+      <div class="project-photo">
+        {% if project.photos %}
+          <img class="img-left-project" src="{{ project.photos.url }}" height="400" width="500">
+        {% endif %}
+      </div>
+      <div class="project-info">
+        <h1>{{ project.title }}</h1>
+        <div class="user-info-row">
+        {% if project.user.photo %}
+          <img src="{{ project.user.photo.url }}" height=30 width=30><br><br>
+        {% else %}
+          <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+        {% endif %} 
+        <p><a href="">{{ project.user.user }}</a> {% trans 'posted on' %} {{ project.posted }}</p>
+        </div>
+        <div class="btn-row">
+        {% if project.colab %}
+            <a href="{{project.colab}}"><img src="{% static 'main\img\colab_logo.png' %}" alt=""></a>
+        {% endif %}
+        <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ project.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="project_id" value="{{ project.id }}">
+          <button type="submit" class="btn btn-light like">
+            <i class="fa-solid fa-thumbs-up"></i>
+            
+          </button>
+          <div class="likes">
+            <div class="like-count">{{ project.project_liked.count }} {% trans 'likes' %}</div>
+          </div>
+        </form>
+        <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ project.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="project_id" value="{{ project.id }}">
+          <button type="submit" class="btn btn-light save">
+            <i class="fa-solid fa-bookmark"></i>
+          </button>
+        </form>
+        <button class="btn btn-danger delete" id="delete-project" onclick="window.location.href='{% url 'project-delete' project.id %}' ">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+        <a href="{% url 'project-edit' project.id%}">
+        <button class="btn btn-light edit" id="edit-project">
+            <i class="fa-solid fa-pen"></i>
+        </button>
+        </a>
+        </div>
+      </div>
+      <div class="project-details">
+        <p>{{ project.info|truncatewords:30|safe }}</p>
+        <a href="{% url 'project-detailed' project.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<div class="questions publications">
+    {% for question in questions %}
+      <div class="question publication">
+        <div class="question-info publication-info">
+          <h1>{{ question.title }} |</h1>
+          {% if question.user.photo %}
+            <img src="{{ question.user.photo.url }}" height=30 width=30><br><br>
+          {% else %}
+            <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+          {% endif %} 
+          <p><a href="">{{ question.user.user }}</a> {% trans 'posted on' %} {{ question.posted }}</p>
+          <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ question.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <button type="submit" class="btn btn-light save">
+              <i class="fa-solid fa-bookmark"></i>
+            </button>
+          </form>
+          <button class="btn btn-danger delete" id="delete-question" onclick="window.location.href='{% url 'question-delete' question.id %}' ">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <a href="{% url 'question-edit' question.id%}">
+            <button class="btn btn-light edit" id="edit-question">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+            </a>
+        </div>
+        <div class="question-details publication-details">
+          {% if question.photos %}
+            <img class="img-left" src="{{ question.photos.url }}">
+          {% endif %}
+          <p>{{ question.info|safe }}</p>
+          <a href="{% url 'question-detailed' question.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+  <div class="articles publications">
+    {% for article in articles %}
+      <div class="article publication">
+        <div class="article-info publication-info">
+          <h1>{{ article.title }} |</h1>
+          {% if article.user.photo %}
+            <img src="{{ article.user.photo.url }}" height=30 width=30><br><br>
+          {% else %}
+            <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+          {% endif %} 
+          <p><a href="">{{ article.user.user }}</a> {% trans 'posted on' %} {{ article.posted }}</p>
+          <form action="{% url 'api-like' %}" method="POST" class="like-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light like">
+              <i class="fa-solid fa-thumbs-up"></i>
+            </button>
+            <div class="likes">
+              <div class="like-count">{{ article.article_liked.count }} {% trans 'likes' %}</div>
+            </div>
+          </form>
+          <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ article.id }}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.id }}">
+            <button type="submit" class="btn btn-light save">
+              <i class="fa-solid fa-bookmark"></i>
+            </button>
+          </form>
+          <button class="btn btn-danger delete" id="delete-article" onclick="window.location.href='{% url 'article-delete' article.id %}' ">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+          <a href="{% url 'article-edit' article.id%}">
+            <button class="btn btn-light edit" id="edit-article">
+                <i class="fa-solid fa-pen"></i>
+            </button>
+            </a>
+        </div>
+        <div class="article-details publication-details">
+          {% if article.photos %}
+            <img class="img-left" src="{{ article.photos.url }}">
+          {% endif %}
+          <p>{{ article.content|truncatewords:100|safe }}</p>
+          <a href="{% url 'article-detailed' article.id %}"><button class="btn btn-info">{% trans 'Learn more' %}</button></a>
+        </div>
+      </div>
+  {% endfor %}
+</div>
+
+<div class="discussions publications">
+  {% for discussion in discussions %}
+    <div class="discussion publication">
+      <div class="discussion-info publication-info">
+        <h1>{{ discussion.title }} |</h1>
+        {% if discussion.user.photo %}
+          <img src="{{ discussion.user.photo.url }}" height=30 width=30><br><br>
+        {% else %}
+          <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+        {% endif %} 
+        <p><a href="">{{ discussion.user.user }}</a> {% trans 'posted on' %} {{ discussion.launched }}</p>
+        <form action="{% url 'api-save' %}" method="POST" class="save-form" id="{{ discussion.id }}">
+          {% csrf_token %}
+          <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+          <button type="submit" class="btn btn-light save">
+            <i class="fa-solid fa-bookmark"></i>
+          </button>
+        </form>
+        <a href="{% url 'discussion-edit' discussion.id%}">
+          <button class="btn btn-light edit" id="edit-discussion">
+              <i class="fa-solid fa-pen"></i>
+          </button>
+          </a>
+      </div>
+      <div class="discussion-details publication-details">
+        {% if discussion.photos %}
+          <img class="img-left" src="{{ discussion.photos.url }}">
+        {% endif %}
+        <a href="{% url 'discussion-detailed' discussion.id %}"><button class="btn btn-info">{% trans "Let's talk" %}</button></a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endif %}
+
+{% endblock %}

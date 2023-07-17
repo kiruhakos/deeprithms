@@ -1,0 +1,169 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'main/img/logo-icon.png' %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.2.0/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
+</head>
+<body class="dark-theme">
+    <header>
+        <div>
+            <a href="{% url 'main' %}"><span class="logo" title="Deeprithms" id="logo"><img src="{% static 'main/img/logo_dark.png' %}" alt=""></span></a>
+        </div>
+        <ul class="navigation">
+            
+                <a href="{% url 'projects' %}"><button class="nav_button"><i class="fa-solid fa-diagram-project"></i> {% trans 'Projects' %}</button></a>
+                <a href="{% url 'articles' %}"><button class="nav_button"><i class="fa-solid fa-newspaper"></i> {% trans 'Articles' %}</button></a>
+                <a href="{% url 'discussions' %}"><button class="nav_button"><i class="fa-solid fa-comment"></i> {% trans 'Discussions' %}</button></a>
+                <a href="{% url 'questions' %}"><button class="nav_button"><i class="fa-solid fa-question"></i> {% trans 'Questions' %}</button></a>
+                <button class="nav_button" id="theme_options" title="{% trans 'Change theme' %}"><i id="icon" class="fa-solid fa-sun"></i></button>
+                <div class="dropdown">
+                <button class="dropbtn nav_button" onclick="showLanguageSelect()" title="{% trans 'Select language' %}"><i class="fa-solid fa-language"></i></button>
+                <form action="{% url 'set_language' %}" method="post" class="dropdown-content languageForm">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ language.code }}/{{ request.get_full_path|slice:'20:' }}">
+                    <select name="language" class="language-select">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}
+                                    selected{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="{% trans 'Submit' %}" class="btn btn-success">
+                </form>
+                </div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' user.id %}"><button class="nav_button"><i class="fa-solid fa-user"></i> {% trans 'Profile' %}</button></a>
+                {% else %}
+                <div class="dropdown">
+                <button class="dropbtn nav_button"><i class="fa-solid fa-user"></i> {% trans 'Account' %}</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'api-login' %}"><button class="sign_in dropdown-button">{% trans 'Sign in' %}</button></a>
+                    <p>{% trans 'or' %}</p>
+                    <a href="{% url 'api-register' %}"><button class="sign_up dropdown-button">{% trans 'Sign up' %}</button></a>
+                </div>
+                </div>
+                {% endif %}
+        </ul>
+        <div class="mobile-authorization">
+        {% if user.is_authenticated %}
+                
+        {% else %}
+                <div class="mobile-authorization-options">
+                    <a href="{% url 'api-login' %}"><button class="">{% trans 'Sign in' %}</button></a>
+                </div>
+        {% endif %}
+        </div>
+        
+        <div class="mobile-menu">
+            <button id="mobile-menu-toggle">
+                <div id="mobile-menu-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </button>
+            <div class="mobile-menu-items">
+                <a href="{% url 'projects' %}"><i class="fa-solid fa-diagram-project"></i> {% trans 'Projects' %}</button></a>
+                <a href="{% url 'articles' %}"><i class="fa-solid fa-newspaper"></i> {% trans 'Articles' %}</button></a>
+                <a href="{% url 'discussions' %}"><i class="fa-solid fa-comment"></i> {% trans 'Discussions' %}</button></a>
+                <a href="{% url 'questions' %}"><i class="fa-solid fa-question"></i> {% trans 'Questions' %}</button></a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' user.id %}">{% trans 'Profile' %}</a>
+                {% else %}
+                <a href="{% url 'api-login' %}">{% trans 'Sign in' %}</a>
+                <p>{% trans 'or' %}</p>
+                <a href="{% url 'api-register' %}">{% trans 'Sign up' %}</a>
+                {% endif %}
+                </div>
+            </div>
+          
+
+          <script>document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
+            var menuItems = document.querySelector('.mobile-menu-items');
+            
+            if (menuItems.style.right === '-300px') {
+              menuItems.style.right = '0';
+            } else {
+              menuItems.style.right = '-300px';
+            }
+          });</script>
+    </header>
+    <script>
+         document.addEventListener('DOMContentLoaded', function() {
+        var themeOptions = document.getElementById('theme_options');
+        if (themeOptions) {
+            themeOptions.addEventListener('click', function() {
+                var body = document.getElementsByTagName('body')[0];
+                body.classList.toggle('light-theme');
+
+
+                var logo = document.getElementById('logo')
+                var currentSrc = logo.src;
+                var lightThemeSrc = "{% static 'main/img/logo_light.png' %}";
+                var darkThemeSrc = "{% static 'main/img/logo_dark.png' %}";
+                var icon = document.getElementById('icon');
+                var currentClass = icon.className;
+                var lightThemeClass = "fa-solid fa-moon";
+                var darkThemeClass = "fa-solid fa-sun";
+                if (currentSrc === darkThemeSrc) {
+                    logo.src = lightThemeSrc;
+                    icon.className = darkThemeClass
+                } else {
+                    logo.src = darkThemeSrc;
+                    icon.className = lightThemeClass
+                }
+            });
+        }
+    });
+    </script>
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+    {% block content %}
+
+    {% endblock %}
+    <footer>
+        <div class="footer-left">
+            <div class="logo-footer">
+            <a href="{% url 'main' %}"><span class="logo-bottom" title="Deeprithms" id="logo"><img src="{% static 'main/img/logo_dark.png' %}" alt=""></span></a>
+            </div>
+            <div class="copyright">
+              <p>&#169 {% trans 'Deeprithms. All rights reserved.' %}</p>
+            </div>
+        </div>
+        <div class="footer-center">
+          <div class="nav_bottom">
+            <h3>{% trans 'Navigation' %}</h3>
+            <ul>
+                <li><a href="{% url 'projects' %}"><i class="fa-solid fa-diagram-project"></i> {% trans 'Projects' %}</a></li>
+                <li><a href="{% url 'articles' %}"><i class="fa-solid fa-newspaper"></i> {% trans 'Articles' %}</a></li>
+                <li><a href="{% url 'discussions' %}"><i class="fa-solid fa-comment"></i> {% trans 'Discussions' %}</a></li>
+                <li><a href="{% url 'questions' %}"><i class="fa-solid fa-question"></i> {% trans 'Questions' %}</a></li>
+            </ul>
+          </div>
+          <div class="terms">
+            <h3>{% trans 'Usage' %}</h3>
+            <ul>
+                <li><a href="{% url 'terms' %}">{% trans 'Terms' %}</a></li>
+                <li><a href="{% url 'privacy' %}">{% trans 'Privacy' %}</a></li>
+            </ul>
+          </div>
+        </div>
+    </footer>
+</body>
+</html>

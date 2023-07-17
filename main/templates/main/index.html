@@ -1,0 +1,79 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %} {% trans 'Deeprithms - place of AI developers and experts.' %} {% endblock %}
+
+{% block content %}
+
+<div class="main">
+    <div class="main-header">
+    <div class="explanation">
+    <h1 class="title">{% trans 'Deeprithms - place of AI developers and experts.' %}</h1>
+    <div class="main-authorization">
+    <a href="{% url 'api-login' %}"><button class="main-sign_in main-authorization-button">{% trans 'Sign in' %}</button></a>
+    <p>{% trans 'or' %}</p>
+    <a href="{% url 'api-register' %}"><button class="main-sign_up main-authorization-button">{% trans 'Sign up' %}</button></a>
+    </div>
+    </div>
+    <img src="{% static 'main/img/bits.jpg' %}" alt="">
+    </div>
+    <div class="main-center">
+     <div class="about">
+        <div class="about-projects about-elements">
+        <h2>{% trans 'Add and create projects' %}</h2>
+        <p>{% trans 'Add projects you have done or collaborate with others to create new ones.' %}</p>
+        <img src="{% static 'main/img/robotic_conveyor.jpg' %}" alt="">
+        </div>
+        <div class="about-articles about-elements">
+            <h2>{% trans 'Create articles' %}</h2>
+            <p>{% trans 'Create articles about latest AI news.' %}</p>
+            <img src="{% static 'main/img/articles.png' %}" alt="">
+        </div>
+        <div class="about-discussions about-elements">
+            <h2>{% trans 'Start discussions' %}</h2>
+            <p>{% trans 'Start discussions about AI innovative topics.' %}</p>
+            <img src="{% static 'main/img/discussions.jpg' %}" alt="">
+        </div>
+        <div class="about-questions about-elements">
+            <h2>{% trans 'Ask questions' %}</h2>
+            <p>{% trans 'Ask questions and explore solutions to solve your AI application code problems. ' %}</p>
+            <img src="{% static 'main/img/software.gif' %}" alt="">
+        </div>
+     </div>
+    </div>
+</div>
+<script>
+    window.addEventListener('scroll', function() {
+  var about_elements = document.querySelectorAll('.about-elements');
+  var windowHeight = window.innerHeight;
+
+  Array.from(about_elements).forEach(function(about_element) {
+    var position = about_element.getBoundingClientRect().top;
+
+    if (position - windowHeight <= 0) {
+      about_element.classList.add('show');
+    }
+  });
+});
+</script>
+
+<button class="top-btn" id="top-btn" onclick="topFunction()">&#8593</button>
+
+<script>
+let topButton = document.getElementById('top-btn');
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if(document.body.scrollTop > 100 || document.documentElement.scrollTop > 100){
+       topButton.style.display = "block";
+    } else{
+       topButton.style.display = "none";
+    }
+}
+
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+
+{% block title %} {% trans 'Question №' %} {{ question.id }}{% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<body>
+<div class="detailed-question detailed-publication">
+<h1 class="detailed-question-title">{{ question.title }}</h1>
+{% if question.photos %}
+    <p><img class="img-center" src="{{question.photos.url}}"></p>
+{% endif %}
+{% if question.user.photo %}
+  <img src="{{ question.user.photo.url }}" height=30 width=30><br><br>
+   {% else %}
+  <img src="{% static 'main\img\user.png' %}" height=30 width=30><br><br>
+   {% endif %} 
+<p class="detailed-question-user"><a href="">{{ question.user.user }}</a></p>
+<p class="detailed-question-content">{{ question.info|safe }}</p>
+{%if question.meetengine %}
+<a href="{{ question.meetengine }}" class="detailed-question-meetengine"><img src="{% static 'main\img\meet_engine_logo.png' %}" alt=""></a>{% endif %}
+<pre class="code"><code>{{ question.get_highlighted_code_question|safe }}</code></pre>
+
+
+<div class="answers">
+  <h1>{% trans 'Answers' %}</h1>
+  {% if user.is_active %}
+  <div class="answerform">
+  <form action="{% url 'question-detailed' question.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form_answer.as_p }}
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+</form>
+</div>
+
+
+{% endif %}
+  {% for answer in question.answers.all %}
+  <div class="answer">
+    <a href="{% url 'profile' answer.user.id%}">
+       {% if answer.user.avatar %}
+       <img src="{{ answer.user.photo.url }}" height=50 width=50><br><br>
+       {% else %}
+       <img src="{% static 'main\img\user.png' %}" height=50 width=50><br><br>
+       {% endif %} 
+       <p>{{ answer.user.user }}</p></a>
+       <p>{{ answer.content|safe }}</p>
+       <pre class="code"><code>{{ answer.get_highlighted_code_answer|safe }}</code></pre>
+       {% if answer.photos %}
+      <p><img class="img-center" src="{{answer.photos.url}}"></p>
+    {% endif %}
+       <p>{% trans 'Answered' %} {{ answer.posted|timesince }}  {% trans 'ago' %} </p></div>
+  {% endfor %}
+</div>
+
+<div class="comments">
+  <h1>{% trans 'Discussion' %}</h1>
+  {% if user.is_active %}
+  <div class="commentform">
+  <form action="{% url 'question-detailed' question.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+</form>
+</div>
+
+
+{% endif %}
+  {% for comment in question.comments.all %}
+  <div class="comment">
+    <a href="{% url 'profile' comment.user.id%}">
+       {% if comment.user.avatar %}
+       <img src="{{ comment.user.photo.url }}" height=50 width=50><br><br>
+       {% else %}
+       <img src="{% static 'main\img\user.png' %}" height=50 width=50><br><br>
+       {% endif %} 
+       <p>{{ comment.user.user }}</p></a>
+       <p>{{ comment.content|safe }}</p>
+       {% if comment.photos %}
+      <p><img class="img-center" src="{{comment.photos.url}}"></p>
+    {% endif %}
+       <p>{% trans 'Commented' %} {{ comment.posted|timesince }}  {% trans 'ago' %} </p></div>
+  {% endfor %}
+</div>
+
+</div>
+</div>
+</body>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'main/main.html' %}
+{% load static i18n %}
+{% block title %}{% trans 'New project' %}{% endblock %}
+
+{% block content %}
+
+<div class="new-publication">
+  <div class="publicationForm">
+    <h1>{% trans 'New project' %}</h1>
+    {% if user.is_active %}
+    <form action="{% url 'new-project' %}" method="post" enctype="multipart/form-data" id="projectForm">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+      {% endif %}
+  </form>
+  </div>
+</div>
+
+<script>
+  document.getElementById("projectForm").onkeydown = function(event){
+   if(event.keyCode == 13){
+    document.getElementById("projectForm").submit()
+   }
+};
+</script>
+{% endblock content %}

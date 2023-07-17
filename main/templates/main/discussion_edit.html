@@ -1,0 +1,19 @@
+{% extends 'main/main.html' %}
+{% load static i18n%}
+{% block title %}{% trans 'Edit discussion' %} {{discussion.id}}{% endblock %}
+
+{% block content %}
+
+<div class="edit-publication">
+    <div class="publicationForm">
+    <h1>{% trans 'Edit discussion' %} {{discussion.id}}</h1>
+    {% if user.is_active %}
+    <form action="{% url 'discussion-edit' discussion.id %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-success"><i class="fa-solid fa-paper-plane"></i></button>
+      {% endif %}
+  </form>
+  </div>
+</div>
+{% endblock content %}
