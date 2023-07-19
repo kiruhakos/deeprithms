@@ -366,22 +366,32 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
-        'syslog':{
-            'level':'INFO',
-            'class': 'logging.handlers.SysLogHandler',
-            'facility': SysLogHandler.LOG_LOCAL2,
-            'address': '/dev/log',
-            'formatter': 'verbose',
+        'logfile': {
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'deeprithms.log')
         },
+        # 'syslog':{
+        #     'level':'INFO',
+        #     'class': 'logging.handlers.SysLogHandler',
+        #     'facility': SysLogHandler.LOG_LOCAL2,
+        #     'address': '/dev/log/deeprithms.log',
+        #     'formatter': 'verbose',
+        # },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
     },
     'loggers': {
+        'django': {
+            'handlers': ['logfile'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
         '': {
-            'handlers': ['console', 'syslog', 'mail_admins'],
+            'handlers': ['console', 'logfile', 'mail_admins'],
             'level': 'DEBUG',
             'propagate': False,
         },
