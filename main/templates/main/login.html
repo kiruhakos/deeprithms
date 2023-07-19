@@ -28,7 +28,8 @@
     <input type="password" name="password" id="password" required>
     <label for="">{% trans 'Password' %}</label>
     </div>
-    <div class="g-recaptcha" data-sitekey="6LfJnSInAAAAAEHmQh72zrYUHuoeRS_1JwRDi6nE" data-callback="correctCaptcha"><input type="hidden" name="recaptcha" id="recaptcha" required></div>
+    <div class="g-recaptcha" data-sitekey="6LfJnSInAAAAAEHmQh72zrYUHuoeRS_1JwRDi6nE" data-callback="correctCaptcha"></div>
+    <input type="hidden" name="recaptcha" id="recaptcha">
     <a href="{% url 'api-register' %}"><p>{% trans 'Sign up' %}</p></a>
     <button type="submit">{% trans 'Sign in' %}</button> 
   </form>
@@ -37,7 +38,7 @@
   </div>
   <script>
     var correctCaptcha = function(response) {
-          console.log(response);
+          document.getElementById('recaptcha').value = request
       };
   </script>
 {% endblock content %}
