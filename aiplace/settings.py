@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'deeprithms.onrender.com']
 
@@ -351,47 +351,47 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'formatters': {
-        'verbose': {
-            'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-        'syslog':{
-            'level':'INFO',
-            'class': 'logging.handlers.SysLogHandler',
-            'facility': SysLogHandler.LOG_LOCAL2,
-            'address': '/dev/log',
-            'formatter': 'verbose',
-        },
-        'mail_admins': {
-            'level': 'WARNING',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
-        },
-        'sentry': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'sentry_sdk.integrations.django.DjangoIntegration',
-        },
-    },
-    'loggers': {
-        '': {
-            'handlers': ['console', 'syslog', 'mail_admins', 'sentry'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'filters': {
+#         'require_debug_false': {
+#             '()': 'django.utils.log.RequireDebugFalse'
+#         }
+#     },
+#     'formatters': {
+#         'verbose': {
+#             'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'console': {
+#             'level': 'DEBUG',
+#             'class': 'logging.StreamHandler',
+#         },
+#         'syslog':{
+#             'level':'INFO',
+#             'class': 'logging.handlers.SysLogHandler',
+#             'facility': SysLogHandler.LOG_LOCAL2,
+#             'address': '/dev/log',
+#             'formatter': 'verbose',
+#         },
+#         'mail_admins': {
+#             'level': 'WARNING',
+#             'filters': ['require_debug_false'],
+#             'class': 'django.utils.log.AdminEmailHandler',
+#         },
+#         'sentry': {
+#             'level': 'ERROR',
+#             'filters': ['require_debug_false'],
+#             'class': 'sentry_sdk.integrations.django.DjangoIntegration',
+#         },
+#     },
+#     'loggers': {
+#         '': {
+#             'handlers': ['console', 'syslog', 'mail_admins', 'sentry'],
+#             'level': 'DEBUG',
+#             'propagate': False,
+#         },
+#     }
+# }
