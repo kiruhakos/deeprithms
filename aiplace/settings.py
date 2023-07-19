@@ -348,40 +348,39 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
+LOG_FILE_PATH = os.path.join(BASE_DIR, 'logs', 'deeprithms.log')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
         'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
     },
     'formatters': {
         'verbose': {
-            'format': '[contactor] %(levelname)s %(asctime)s %(message)s'
+            'format': '[contactor] %(levelname)s %(asctime)s %(message)s',
         },
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO', 
             'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
         },
         'logfile': {
+            'level': 'ERROR',  
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': os.path.join(BASE_DIR, 'logs', 'deeprithms.log')
+            'filename': LOG_FILE_PATH,  
+            'formatter': 'verbose',
         },
-        # 'syslog':{
-        #     'level':'INFO',
-        #     'class': 'logging.handlers.SysLogHandler',
-        #     'facility': SysLogHandler.LOG_LOCAL2,
-        #     'address': '/dev/log/deeprithms.log',
-        #     'formatter': 'verbose',
-        # },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
             'include_html': True,
+            'formatter': 'verbose',
         },
     },
     'loggers': {
@@ -395,5 +394,5 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
-    }
+    },
 }
