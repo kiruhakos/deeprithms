@@ -30,7 +30,7 @@
       <input type="email" name="email" id="email" required>
       <label for="">{% trans 'Email' %}</label>
       </div>
-      <div class="g-recaptcha" data-sitekey="6LfJnSInAAAAAEHmQh72zrYUHuoeRS_1JwRDi6nE" data-callback="correctCaptcha"></div>
+      <div class="g-recaptcha" data-sitekey="6LfJnSInAAAAAEHmQh72zrYUHuoeRS_1JwRDi6nE" data-callback="correctCaptcha"><input type="hidden" name="recaptcha" id="recaptcha" required></div>
 
       <a href="{% url 'api-login' %}"><p>{% trans 'Sign in' %}</p></a>
       <button type="submit">{% trans 'Sign up' %}</button>
