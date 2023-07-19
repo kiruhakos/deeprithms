@@ -19,6 +19,7 @@ import dj_database_url
 import logging
 import logging.handlers
 from logging.handlers import SysLogHandler
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -383,7 +384,7 @@ LOGGING = {
         'sentry': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
-            'class': 'raven.contrib.django.handlers.SentryHandler',
+            'class': 'sentry_sdk.integrations.django.DjangoIntegration',
         },
     },
     'loggers': {
