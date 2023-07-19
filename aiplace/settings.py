@@ -185,10 +185,20 @@ WSGI_APPLICATION = 'aiplace.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
+# DATABASES = {
+#     'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
+# }
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("DATABASE_NAME"),
+        'USER': config("DATABASE_USER"),
+        'PASSWORD': config("DATABASE_PASSWORD"),
+        'HOST': config("DATABASE_HOST"),
+        'PORT': config("DATABASE_PORT"),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
